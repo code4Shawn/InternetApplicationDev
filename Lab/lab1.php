@@ -2,6 +2,7 @@
 	<?php
 		include_once 'DBConnector.php';
 		include_once 'user.php';
+
 		$con = new DBConnector;
 		if (isset($_POST['btn-save'])) {
 			$first_name = $_POST['first_name'];
@@ -9,18 +10,19 @@
 			$city = $_POST['city_name'];
 
 			$user = new User($first_name, $last_name, $city);
+
 			$res = $user->save();
 
 			if ($res) {
-				echo "Record Added Successfully";
+				echo "Operation is completed";
 			}else{
-				echo "Error Adding Record";
+				echo "Error occurred";
 			}
 		}
 	?>
 	<html>
 		<head>
-			<title>SIGN UP</title>
+			<title>USER</title>
 		</head>
 		
 		<body>

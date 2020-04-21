@@ -25,10 +25,14 @@
 			$fn = $this -> first_name;
 			$ln = $this -> last_name;
 			$city = $this -> city_name;
+
 			$res = "INSERT INTO user (first_name,last_name,user_city) VALUES('".$fn."','".$ln."','".$city."')";
-			if ($this->conn->conn->query($res)){
+
+			if ($this->conn->conn-> query ($res)){
+
 				return "Record Added successfully";
-			}else {
+			}
+			else {
 				return null; 
 			}
 		}
