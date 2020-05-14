@@ -10,17 +10,22 @@
 		private $city_name;
 		private $username;
 		private $password;
+		private $utcTime;
+		private $offset;
 				
-		function __construct($first_name, $last_name, $city_name, $username, $password){
+		function __construct($first_name, $last_name, $city_name, $username, $password, $utcTime, $offset){
+
 			$this->first_name = $first_name;
 			$this->last_name = $last_name;
 			$this->city_name = $city_name;
 			$this->username = $username;
 			$this->password = $password;
+			$this->utcTime = $utcTime;
+			$this->offset = $offset;
 			$this->conn = new DBConnector;
 		}
 		//static constructor
-		public static function create(){
+		public static function create($first_name, $last_name, $city_name, $username, $password, $utcTime, $offset){
 			$instance = new self();
 			return $instance;
 		}
@@ -33,12 +38,28 @@
 			return $this->username;
 		}
 		//password setter
-		public function setPassword($username){
+		public function setPassword($password){
 			$this->password = $password;
 		}
 		//password getter
-		public function getPassword($username){
+		public function getPassword($password){
 			return $this->password;
+		}
+		//utc_time setter
+		public function setUtcTime($utcTime){
+			$this->utcTime = $utcTime;
+		}
+		//utc_time getter
+		public function getUtcTime($utcTime){
+			return $this->utcTime; 
+		}
+		//offset setter
+		public function setOffset($offset){
+			$this->offset = $offset;
+		}
+		//offset getter
+		public function getOffset($offset){
+			return $this->offset;
 		}
 		//userID setter
 		public function setUserID($user_id){
@@ -57,7 +78,9 @@
 			$uname = $this->username;
 			$this->hashPassword();
 			$pass = $this->password;
-			$res = "INSERT INTO user (first_name,last_name,user_city,username,password) VALUES('".$fn."','".$ln."','".$city."','".$uname."','".$pass."')";
+			$utc  = $this->utcTime;
+			$off = $this->offset;
+			$res = "INSERT INTO user (first_name, last_name, user_city, username, password, utcTime, offset) VALUES('".$fn."','".$ln."','".$city."','".$uname."','".$pass."','".$utc."','".$off."')";
 			if ($this->conn->conn->query($res)){
 				return "Record Added successfully";
 			}else {

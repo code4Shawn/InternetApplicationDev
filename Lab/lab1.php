@@ -10,7 +10,11 @@
 			$username = $_POST['username'];
 			$password = $_POST['password'];
 
-			$user = new User($first_name, $last_name, $city, $username, $password);
+			$utcTime = $_POST['utcTime'];
+			$offset = $_POST['offset'];
+
+			//creating user object
+			$user = new User($first_name, $last_name, $city, $username, $password, $utcTime, $offset);
 			if (!$user->validateForm()) {
 				$user->createFormErrorSessions();
 				header("Refresh:0");
@@ -30,6 +34,11 @@
 			<title>SIGN UP</title>
 			<script type="text/javascript" src="validate.js"></script>
 			<link rel="stylesheet" type="text/css" href="validate.css">
+
+			<!--include jquery here. get it from cnd network-->
+			<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+			<!--your new js file comes after including your query-->
+			<script type ="text/javascript" src ="timezone.js"></script>
 		</head>
 		
 		<body>
@@ -66,6 +75,11 @@
 					<tr>
 						<td><button type="submit" name="btn-save"><strong>SAVE</strong></button></td>
 					</tr>
+
+					<!--create hidden controls to store client utc date and time zone-->
+					<input type ="hidden" name ="utcTime" id ="utcTime" value =""/>
+					<input type ="hidden" name ="offset" id ="offset" value =""/>
+
 					<tr>
 						<td><a href="login.php">Login</a></td>
 					</tr>
