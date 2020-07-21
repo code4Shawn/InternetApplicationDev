@@ -1,0 +1,14 @@
+.main-container {
+    display: flex;
+    justify-content: center;
+}
+
+.size-box-400 {
+    min-width: 700px !important;
+    margin-top: 40px;
+}
+
+.adj-modal{
+    min-width: 700px !important;
+}
+

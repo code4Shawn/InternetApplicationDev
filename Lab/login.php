@@ -1,46 +1,67 @@
 <?php
-	include_once 'DBConnector.php';
-	include_once 'user.php';
+require_once "php/User.php";
+$user = new User;
 
-	$con = new DBConnector;
-	if (isset($_POST['btn-login'])) {
-		$username = $_POST['username'];
-		$password = $_POST['password'];
-		$instance = user::create();
-		$instance->setPassword($password);
-		$instance->setUsername($username);
+if(isset($_SESSION["username"])){
+    header("location: private.php");
+}
 
-		if ($instance->isPasswordCorrect()) {
-			$instance->login();
-			$con->closeDatabase();
-			$instance->createUserSession();
-		}else{
-			$con->closeDatabase();
-			header("Location:login.php");
-		}
-	}
+if (isset($_POST['action'])) {
+    $user->setUsername($_POST["u"]);
+    $user->setPassword($_POST["p"]);
+    $user->logIn();
+
+}
 ?>
 
 <!DOCTYPE html>
-	<html>
-		<head>
-			<title>LOGIN</title>
-			<script type="text/javascript" src="validate.js"></script>
-			<link rel="stylesheet" type="text/css" href="validate.css">
-		</head>
-		<body>
-			<form method="POST" name="login" id="login" action="<?=$_SERVER['PHP_SELF']?>">
-				<table>
-					<tr>
-						<td><input type="text" name="username" placeholder="Username" required></td>
-					</tr>
-					<tr>
-						<td><input type="password" name="password" placeholder="Password" required></td>
-					</tr>
-					<tr>
-						<td><button type="submit" name="btn-login"><strong>LOGIN</strong></button></td>
-					</tr>
-				</table>
-			</form>
-		</body>
-	</html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Wk</title>
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection">
+    <link type="text/css" rel="stylesheet" href="css/add.css">
+</head>
+
+<body>
+   
+    <div class="main-container">
+        <div class="size-box-400">
+            <div class="row">
+                <form class="col s12" action="login.php" method="POST" onsubmit="return validateForm()" enctype="multipart/form-data">
+                <div class="row">
+                        <div class="input-field col s12">
+                            <input name="u" id="username" type="text" class="validate">
+                            <label for="username">User Name</label>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input name="p" id="password" type="password" class="validate">
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+
+                    <div class="center-align">
+                        <button class="btn waves-effect waves-light blue darken-1" type="submit" name="action">LOGIN
+                            <i class="material-icons right">done</i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+<!--JavaScript at end of body for optimized loading-->
+<script defer type="text/javascript" src="js/materialize.min.js"></script>
+<script defer type="text/javascript" src="js/add.js"></script>
+</html>
